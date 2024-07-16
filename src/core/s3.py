@@ -61,13 +61,21 @@ class S3():
         s3 = s3fs.core.S3FileSystem(**client_kwargs)
 
         # Tentukan path folder di S3
-        folder_path = 's3://ai-pipeline-statistics/data/data_raw/Divtik/crisis group/global conflict tracker/json/'
+        folder_path = 's3://ai-pipeline-statistics/data/data_raw/bnn/Satu Data BNN/'
 
         # Dapatkan daftar file dalam folder
         files = s3.ls(folder_path)
-        print(len(files))
+        # print(len(files))
 
+
+        datas = {}
         # Tampilkan daftar file
-        print("Daftar file dalam folder:")
-        # for file_path in files:
-            # print(file_path)
+        for i,file_path in enumerate(files, start=1):
+            datas.update({str(i):file_path})
+
+
+        with open('datas.json', 'w') as file:
+                json.dump(datas, file, indent=4)
+
+
+S3().read_file()
